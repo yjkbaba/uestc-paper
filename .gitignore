@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local configuration and secrets
+.env
+*.local.json
+config.local.*
+
+# Authentication / browser state
+runtime/
+sessions/
+cookies/
+browser-profile/
+chrome-profile/
+playwright-profile/
+*.cookie
+
+# Downloads
+downloads/
+papers/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
