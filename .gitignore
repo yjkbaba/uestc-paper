@@ -1,6 +1,12 @@
 # Python
 __pycache__/
 *.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+*.pdf
 .venv/
 venv/
 
@@ -29,3 +35,10 @@ papers/
 # OS
 .DS_Store
 Thumbs.db
+
+# Release hygiene: local diagnostic and transient artifacts
+*.crdownload
+*.part
+*.tmp
+*.log
+*.har
