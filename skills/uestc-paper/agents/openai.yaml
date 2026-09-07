@@ -1,0 +1,4 @@
+interface:
+  display_name: "UESTC Paper"
+  short_description: "Retrieve one paper by DOI for authorized UESTC users"
+  default_prompt: "Use $uestc-paper to retrieve one paper by DOI. Prefer Open Access first; if UESTC institutional IEEE/IEL access is needed, open a visible browser and let me complete authentication manually."

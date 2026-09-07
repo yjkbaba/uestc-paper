@@ -29,4 +29,5 @@ target-version = "py310"
 
 [tool.setuptools.data-files]
 "share/uestc-paper/skills/uestc-paper" = ["skills/uestc-paper/SKILL.md"]
+"share/uestc-paper/skills/uestc-paper/agents" = ["skills/uestc-paper/agents/openai.yaml"]
 "share/uestc-paper/skills/uestc-paper/references" = ["skills/uestc-paper/references/uestc-access.md", "skills/uestc-paper/references/compliance.md"]

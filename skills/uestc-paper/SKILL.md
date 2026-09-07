@@ -5,6 +5,13 @@ description: Retrieve one paper by DOI for an authorized UESTC user. Prefer lawf
 
 # UESTC Paper
 
+## Core Rule
+
+Use this Skill as the entry point for authorized UESTC single-paper retrieval.
+For institutional IEEE retrieval, follow this Skill's established workflow instead
+of constructing publisher proxy URLs, repeating clicks, automating authentication,
+or bypassing access controls.
+
 ## Scope and CLI
 
 RC1 accepts one DOI: raw DOI, doi: prefix, or https://doi.org/ URL. Title and
@@ -47,6 +54,45 @@ Setup reports browser availability but does not install binaries. See README.
    error-preview/identity verification. Native Viewer retrieval requires DOI MATCH.
 10. Save only through the exclusive final-output gate after verification. Report
     the actual local file and access route. E2E_SUCCESS requires verified final save.
+
+## Required Output
+
+Every retrieval attempt must end with a report containing the DOI, metadata title,
+access route, final state, verification result, identity result, page count when
+available, final file path on success, and the next action when unsuccessful.
+
+Successful report example (the path is illustrative only):
+
+```text
+DOI: 10.xxxx/xxxx
+Title: Example paper title
+Route: UESTC WebVPN → IEEE/IEL
+Result: E2E_SUCCESS
+Verification: PDF_VERIFIED
+Identity: DOI MATCH
+Pages: 4
+Saved to: <user-selected-output-directory>\example.pdf
+```
+
+Unsuccessful report example:
+
+```text
+DOI: 10.xxxx/xxxx
+Title: Example paper title
+Route: UESTC WebVPN → IEEE/IEL
+Result: IEEE_PDF_VIEWER_TIMEOUT
+Verification: NOT_REACHED
+Identity: NOT_REACHED
+Next action: retry in a fresh visible session
+```
+
+## Final Checks
+
+Before reporting `E2E_SUCCESS`, confirm that the completed file exists, is not a
+`.crdownload`, has valid PDF magic bytes, parses successfully, contains more than
+zero pages, matches the requested DOI, and passed the final-save gate. If any check
+fails, do not report `E2E_SUCCESS`. Viewer visibility or a download event is not
+success when the final file does not exist.
 
 ## Authentication boundary and safety
 

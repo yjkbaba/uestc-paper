@@ -14,6 +14,46 @@ Technology of China (UESTC) users. Release candidate: **0.1.0rc1**.
 
 Title and publisher-URL input are not implemented in this RC.
 
+## For Codex users
+
+The institutional end-to-end path is currently validated on Windows, and IEEE/IEL
+is the only institutional adapter. First-time users can copy this prompt into Codex:
+
+```text
+请帮我安装并使用这个 Skill：
+
+https://github.com/yjkbaba/uestc-paper
+
+在 Windows 上配置好 uestc-paper。
+项目目录可以由你选择或询问我。
+最终论文保存目录请先询问我。
+
+先阅读：
+README.md
+skills/uestc-paper/SKILL.md
+
+安装完成后，用 uestc-paper 下载我提供的 DOI。
+
+如果需要 UESTC 身份认证，请打开可见浏览器让我自己完成。
+不要读取或填写密码、OTP、CAPTCHA。
+
+其余流程自动完成。
+只有 PDF_VERIFIED 且 DOI MATCH 才算成功。
+```
+
+After installation, use this daily prompt and replace the placeholders:
+
+```text
+使用 uestc-paper 下载这个 DOI：
+
+10.xxxx/xxxx
+
+如果需要 UESTC 登录，请打开可见浏览器让我自己认证。
+最终论文保存到：<用户指定目录>
+
+只有 PDF_VERIFIED 且 DOI MATCH 后才算成功。
+```
+
 ## Current validated path
 
 Open Access implementation (automated fixture coverage; source coverage is limited):
@@ -41,6 +81,16 @@ reliable PDF control, the existing article-detail fallback is available.
 
 Python 3.10+; the validated environment used Windows 11 and Python 3.13.9.
 
+For most users, install the command in an isolated environment with `pipx`:
+
+```powershell
+pipx install git+https://github.com/yjkbaba/uestc-paper.git
+uestc-paper setup
+```
+
+The following virtual-environment flow remains useful for contributors and users
+who prefer to manage the Python environment themselves:
+
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -59,10 +109,12 @@ asks for terminal Enter to close it. During `get`, portal detection continues
 without terminal confirmation. `--wait-seconds` controls institutional entry wait
 (1–3600; default 300), not a fixed sleep. `--no-browser` limits retrieval to OA.
 
-Keep the same working directory or set `UESTC_PAPER_HOME`; `--home PATH` overrides
-it. The dedicated profile is `runtime/browser-profile/`, and unverified downloads
-stay in `runtime/download-capture/`. Verified output defaults to `downloads/`.
-Set `UESTC_PAPER_OUTPUT` to choose another local final directory, for example:
+The project/runtime root contains configuration and local runtime state. Keep the
+same working directory or set `UESTC_PAPER_HOME`; `--home PATH` overrides it. The
+local `runtime/browser-profile/` holds reusable browser session state, while
+`runtime/download-capture/` holds temporary, unverified downloads. Neither is a
+final paper destination. The final verified output directory defaults to
+`downloads/`; set `UESTC_PAPER_OUTPUT` to any local directory you choose, for example:
 
 ```powershell
 $env:UESTC_PAPER_OUTPUT = 'D:\文件'
@@ -102,6 +154,15 @@ V0.1 is single-paper retrieval, not a bulk downloader, crawler, or systematic
 subscribed-content harvesting tool. IEEE is the only institutional adapter.
 Elsevier, Springer, ACM, Wiley and other publishers are **not verified or supported**
 by institutional adapters in this RC. Use only papers you are entitled to access.
+
+## Current limits
+
+- One DOI per invocation.
+- IEEE/IEL is the only institutional adapter.
+- Native Save As institutional E2E is validated only on Windows.
+- Title and URL input are not implemented in RC1.
+- No batch downloading of subscribed resources.
+- No MCP server in V0.1.
 
 ## Verification
 
